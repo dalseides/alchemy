@@ -1,0 +1,22 @@
+{
+  "name": "alchemy",
+  "version": "1.0.0",
+  "description": "Stock analysis and trading app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dalseides/alchemy.git"
+  },
+  "author": "Dalseides",
+  "license": "LGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/dalseides/alchemy/issues"
+  },
+  "homepage": "https://github.com/dalseides/alchemy#readme",
+  "dependencies": {
+    "oauth": "^0.9.15"
+  }
+}
