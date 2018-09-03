@@ -4,7 +4,8 @@
   "description": "Stock analysis and trading app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,7 @@
   },
   "homepage": "https://github.com/dalseides/alchemy#readme",
   "dependencies": {
+    "dotenv": "^6.0.0",
     "oauth": "^0.9.15"
   }
 }

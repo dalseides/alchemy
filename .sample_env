@@ -1,0 +1,5 @@
+API_URL="https://api.tradeking.com/v1"
+CONSUMER_KEY=""
+CONSUMER_SECRET=""
+ACCESS_TOKEN=""
+ACCESS_SECRET=""
