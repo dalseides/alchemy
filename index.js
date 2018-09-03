@@ -11,10 +11,12 @@ iex.stockChart('AAPL', 'date/20180831').then((data) =>
   var movingAverageLongLength = 30;
   var movingAverageShort = [];
   var movingAverageLong = [];
-  for (let minute in data)
+  var shortIsHigh = [];
+  var runningProfit = 0, lastBought = 0, lastSold = 0;
+
+  for (let minute in data))
   {
     averages.push(data[minute].average);
-    let shortIsHigh = false;
     
     // Short moving average
     if (minute === 0)
@@ -44,14 +46,31 @@ iex.stockChart('AAPL', 'date/20180831').then((data) =>
         count++;
       }
 
-      if (movingAverageShort[minute] > movingAverageLong[minute]) { shortIsHigh = true; }
-      else { shortIsHigh = false; }
-
       movingAverageLong.push(sum/count);
-    }
 
-    console.log("Average: " + averages[minute] + "\t\tS Mv Avg: " + movingAverageShort[minute] + "\t\tL Mv Avg: " + movingAverageLong[minute] + "\t\tshortIsHigh: " + shortIsHigh);
+      shortIsHigh.push(movingAverageShort[minute] > movingAverageLong[minute])
+    
+      if (shortIsHigh.length > 1 && shortIsHigh[minute] != shortIsHigh[minute -1])
+      {
+        console.log("Average: " + averages[minute] + "\t\tS Mv Avg: " + movingAverageShort[minute] + "\t\tL Mv Avg: " + movingAverageLong[minute] + "\t\tshortIsHigh: " + shortIsHigh[minute]);
+        if (shortIsHigh[minute]) 
+        {
+          console.log("--- BUYBUYBUY ---");
+          lastBought = averages[minute];
+        }
+        else 
+        {
+          console.log("--- SELLSELLSELL ---");
+          if (lastBought !== 0)
+          {
+            lastSold = averages[minute];
+            runningProfit += lastSold - lastBought;
+          }
+        }
+      }
+    }
   }
+  console.log("TOTALPROFITGUYS: " + runningProfit);
 
 });
 
@@ -78,4 +97,5 @@ var tradeking_consumer = new oauth.OAuth
 
 tradeking_consumer.get(config.api_url + '/accounts.json', config.access_token, config.access_secret, function (err, data, res) {
     acct_data = JSON.parse(data);
-    console.log('acct_data: ' + JSON.stringify(acct_data.response)); });
+    //console.log('acct_data: ' + JSON.stringify(acct_data.response));
+});
