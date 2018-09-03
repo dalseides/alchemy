@@ -19,6 +19,9 @@
   "homepage": "https://github.com/dalseides/alchemy#readme",
   "dependencies": {
     "dotenv": "^6.0.0",
+    "iex-api": "0.0.3",
+    "isomorphic-fetch": "^2.2.1",
+    "node": "^10.9.0",
     "oauth": "^0.9.15"
   }
 }

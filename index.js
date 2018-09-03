@@ -1,6 +1,61 @@
 require('dotenv').config();
 var oauth = require('oauth');
+var IEXClient = require('iex-api');
+var fetch = require('isomorphic-fetch');
 
+const iex = new IEXClient.IEXClient(fetch);
+iex.stockChart('AAPL', 'date/20180831').then((data) => 
+{
+  var averages = [];
+  var movingAverageShortLength = 5;
+  var movingAverageLongLength = 30;
+  var movingAverageShort = [];
+  var movingAverageLong = [];
+  for (let minute in data)
+  {
+    averages.push(data[minute].average);
+    let shortIsHigh = false;
+    
+    // Short moving average
+    if (minute === 0)
+    {
+      movingAverageShort.push(data[minute].average);
+      movingAverageLong.push(data[minute].average);
+    }
+    else
+    {
+      let sum = 0;
+      let count = 0;
+
+      for (let i = minute; (i > minute - movingAverageShortLength) && (i >= 0); i--)
+      {
+        sum += data[i].average
+        count++;
+      }
+
+      movingAverageShort.push(sum/count);
+
+      sum = 0;
+      count = 0;
+
+      for (let i = minute; (i > minute - movingAverageLongLength) && (i >= 0); i--)
+      {
+        sum += data[i].average
+        count++;
+      }
+
+      if (movingAverageShort[minute] > movingAverageLong[minute]) { shortIsHigh = true; }
+      else { shortIsHigh = false; }
+
+      movingAverageLong.push(sum/count);
+    }
+
+    console.log("Average: " + averages[minute] + "\t\tS Mv Avg: " + movingAverageShort[minute] + "\t\tL Mv Avg: " + movingAverageLong[minute] + "\t\tshortIsHigh: " + shortIsHigh);
+  }
+
+});
+
+// Tradeking stuffs
 var config =
 {
   api_url: process.env.API_URL,
