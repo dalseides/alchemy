@@ -14,7 +14,7 @@ iex.stockChart('AAPL', 'date/20180831').then((data) =>
   var shortIsHigh = [];
   var runningProfit = 0, lastBought = 0, lastSold = 0;
 
-  for (let minute in data))
+  for (let minute in data)
   {
     averages.push(data[minute].average);
     
